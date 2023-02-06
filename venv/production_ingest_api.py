@@ -14,7 +14,7 @@ def start_crawl():
 
     url = "http://ec2-18-222-53-205.us-east-2.compute.amazonaws.com/api/crawlmgr/init/"
 
-    payload={"environment":"dev"}
+    payload={"environment":"prod"}
     headers = {
     'key': 'ed519c7c-c766-402c-a834-53e3f276b77f',
     'secret': 'b&inPb5dMpHQQQsA%Qqk',
@@ -29,7 +29,7 @@ def start_crawl():
 
 def ingest_api(asset):
 
-    ingest_api = "https://provider-dev.api.pricingculture.com/asset/collectible"
+    ingest_api = "https://provider.api.pricingculture.com/asset/collectible"
     ingest_header = {
         "api-key": "b76dab34-7f87-43d7-aa2a-24e1fa9e9f6a",
         "secret": "1jDhRVpprrlGCZStl6LS",
@@ -37,7 +37,7 @@ def ingest_api(asset):
     }
 
     api_resp = requests.post(ingest_api, headers=ingest_header, data=json.dumps(asset))
-    print(api_resp.text)
+    print("production api response ", api_resp.text)
 
     resp_data = json.loads(api_resp.content)
     return resp_data["asset"]
@@ -46,7 +46,7 @@ def ingest_api(asset):
 def asset_price_method(asset_id , current_bid , bid_date):
 
     bid_date = bid_date
-    asset_price_url = "https://provider-dev.api.pricingculture.com/asset/bid/" + asset_id
+    asset_price_url = "https://provider.api.pricingculture.com/asset/bid/" + asset_id
 
     # print(asset_price_url)
 
@@ -71,8 +71,8 @@ def asset_price_method(asset_id , current_bid , bid_date):
     }
 
     asset_price_api = requests.post(asset_price_url, headers=ingest_header, data=json.dumps(asset_price_data))
-    print("assetPrice", asset_price_api)
-    print(json.dumps(asset_price_data))
+    print("production assetPrice", asset_price_api)
+    # print(json.dumps(asset_price_data))
 
 
 def date_source_method(asset_id , response_data):
